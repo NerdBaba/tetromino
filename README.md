@@ -29,7 +29,7 @@ sudo apt-get install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-mixer-dev
 ### Compilation
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/NerdBaba/tetromino.git
    cd tetromino
    ```
 2. Create a `build` directory and compile:
