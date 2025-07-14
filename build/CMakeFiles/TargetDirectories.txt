@@ -1,0 +1,3 @@
+/home/baba/Projects/goofy/build/CMakeFiles/TetrisEngine.dir
+/home/baba/Projects/goofy/build/CMakeFiles/edit_cache.dir
+/home/baba/Projects/goofy/build/CMakeFiles/rebuild_cache.dir
