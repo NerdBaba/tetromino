@@ -142,6 +142,7 @@ TetrisEngine: CMakeFiles/TetrisEngine.dir/src/Game.cpp.o
 TetrisEngine: CMakeFiles/TetrisEngine.dir/build.make
 TetrisEngine: /usr/lib/x86_64-linux-gnu/libSDL2.so
 TetrisEngine: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
+TetrisEngine: /usr/lib/x86_64-linux-gnu/libSDL2_mixer.so
 TetrisEngine: CMakeFiles/TetrisEngine.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/baba/Projects/goofy/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable TetrisEngine"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TetrisEngine.dir/link.txt --verbose=$(VERBOSE)

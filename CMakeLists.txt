@@ -6,8 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
 include_directories(include)
 
 add_executable(TetrisEngine src/main.cpp src/Tetromino.cpp src/Board.cpp src/Game.cpp)
-target_link_libraries(TetrisEngine SDL2::SDL2 SDL2_ttf::SDL2_ttf)
+target_link_libraries(TetrisEngine SDL2::SDL2 SDL2_ttf::SDL2_ttf SDL2_mixer::SDL2_mixer)

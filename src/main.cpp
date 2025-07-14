@@ -1,17 +1,26 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <iostream>
 #include <algorithm> // For std::min
 #include "Game.h"
 
 int main(int argc, char* argv[]) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) { // Initialize audio subsystem
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return 1;
     }
 
     if (TTF_Init() == -1) {
         std::cerr << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << std::endl;
+        SDL_Quit();
+        return 1;
+    }
+
+    // Initialize SDL_mixer
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::cerr << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        TTF_Quit();
         SDL_Quit();
         return 1;
     }
@@ -35,6 +44,7 @@ int main(int argc, char* argv[]) {
     SDL_Window* window = SDL_CreateWindow("Tetris Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_SHOWN); 
     if (window == nullptr) {
         std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+        Mix_CloseAudio();
         TTF_Quit();
         SDL_Quit();
         return 1;
@@ -44,6 +54,7 @@ int main(int argc, char* argv[]) {
     if (renderer == nullptr) {
         std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(window);
+        Mix_CloseAudio();
         TTF_Quit();
         SDL_Quit();
         return 1;
@@ -74,12 +85,11 @@ int main(int argc, char* argv[]) {
         game.render(renderer, cellSize);
 
         SDL_RenderPresent(renderer);
-
-        // Removed the immediate quit on game over
     }
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    Mix_CloseAudio(); // Close SDL_mixer
     TTF_Quit();
     SDL_Quit();
 

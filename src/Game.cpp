@@ -11,21 +11,64 @@ Game::Game() : score(0), level(1), gameOver(false), paused(false), canSwap(true)
     if (font == nullptr) {
         std::cerr << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << std::endl;
     }
+
+    // Load music and sound effects
+    backgroundMusic = Mix_LoadMUS("assets/sounds/tetris-theme.mp3");
+    if (backgroundMusic == nullptr) {
+        std::cerr << "Failed to load background music! SDL_mixer Error: " << Mix_GetError() << std::endl;
+    }
+
+    moveSound = Mix_LoadWAV("assets/sounds/blip-131856.mp3");
+    if (moveSound == nullptr) {
+        std::cerr << "Failed to load move sound! SDL_mixer Error: " << Mix_GetError() << std::endl;
+    }
+
+    scoreSound = Mix_LoadWAV("assets/sounds/nintendo-game-boy-startup.mp3");
+    if (scoreSound == nullptr) {
+        std::cerr << "Failed to load score sound! SDL_mixer Error: " << Mix_GetError() << std::endl;
+    }
+
+    gameOverSound = Mix_LoadWAV("assets/sounds/game-over-classic-206486.mp3");
+    if (gameOverSound == nullptr) {
+        std::cerr << "Failed to load game over sound! SDL_mixer Error: " << Mix_GetError() << std::endl;
+    }
+
+    // Play background music
+    if (backgroundMusic) {
+        Mix_PlayMusic(backgroundMusic, -1); // Loop indefinitely
+    }
 }
 
 Game::~Game() {
     if (font) {
         TTF_CloseFont(font);
     }
+    if (backgroundMusic) {
+        Mix_FreeMusic(backgroundMusic);
+    }
+    if (moveSound) {
+        Mix_FreeChunk(moveSound);
+    }
+    if (scoreSound) {
+        Mix_FreeChunk(scoreSound);
+    }
+    if (gameOverSound) {
+        Mix_FreeChunk(gameOverSound);
+    }
 }
 
 void Game::spawnTetromino() {
     currentTetromino = nextTetromino.getType() == TetrominoType::None ? Tetromino(static_cast<TetrominoType>(std::uniform_int_distribution<int>(0, static_cast<int>(TetrominoType::L))(rng))) : nextTetromino;
+    currentTetromino.move(-currentTetromino.getX(), -currentTetromino.getY()); // Reset position
+    currentTetromino.move(Board::WIDTH / 2 - currentTetromino.getShape()[0].size() / 2, 0);
+
     nextTetromino = Tetromino(static_cast<TetrominoType>(std::uniform_int_distribution<int>(0, static_cast<int>(TetrominoType::L))(rng)));
     canSwap = true; // Reset swap ability for new piece
 
     if (board.isCollision(currentTetromino)) {
         gameOver = true;
+        if (backgroundMusic) Mix_HaltMusic(); // Stop music on game over
+        if (gameOverSound) Mix_PlayChannel(-1, gameOverSound, 0);
     }
 }
 
@@ -33,6 +76,12 @@ void Game::handleInput(SDL_Event& event) {
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_ESCAPE) {
             paused = !paused;
+            if (paused) {
+                if (backgroundMusic) Mix_PauseMusic();
+            } else {
+                if (backgroundMusic) Mix_ResumeMusic();
+            }
+            if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
             return; // Handle pause key immediately
         }
 
@@ -43,26 +92,32 @@ void Game::handleInput(SDL_Event& event) {
         switch (event.key.keysym.sym) {
             case SDLK_LEFT:
                 moveTetromino(-1, 0);
+                if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
                 break;
             case SDLK_RIGHT:
                 moveTetromino(1, 0);
+                if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
                 break;
             case SDLK_DOWN:
                 if (!moveTetromino(0, 1)) {
                     lockTetromino();
                 }
+                if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
                 break;
             case SDLK_UP:
                 rotateTetromino();
+                if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
                 break;
             case SDLK_SPACE: // Hard drop
                 while (moveTetromino(0, 1)) {
                     // Keep moving down until collision
                 }
                 lockTetromino();
+                if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
                 break;
             case SDLK_RETURN:
                 swapTetromino();
+                if (moveSound) Mix_PlayChannel(-1, moveSound, 0);
                 break;
         }
     }
@@ -231,6 +286,7 @@ void Game::updateScore(int linesCleared) {
             level++;
             fallDelay = std::max(100u, fallDelay - 50u); // Increase speed
         }
+        if (scoreSound) Mix_PlayChannel(-1, scoreSound, 0);
     }
 }
 

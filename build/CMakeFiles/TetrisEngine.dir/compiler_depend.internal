@@ -409,6 +409,7 @@ CMakeFiles/TetrisEngine.dir/src/Game.cpp.o
  /usr/include/SDL2/SDL_messagebox.h
  /usr/include/SDL2/SDL_metal.h
  /usr/include/SDL2/SDL_misc.h
+ /usr/include/SDL2/SDL_mixer.h
  /usr/include/SDL2/SDL_mouse.h
  /usr/include/SDL2/SDL_mutex.h
  /usr/include/SDL2/SDL_pixels.h
@@ -1099,6 +1100,7 @@ CMakeFiles/TetrisEngine.dir/src/main.cpp.o
  /usr/include/SDL2/SDL_messagebox.h
  /usr/include/SDL2/SDL_metal.h
  /usr/include/SDL2/SDL_misc.h
+ /usr/include/SDL2/SDL_mixer.h
  /usr/include/SDL2/SDL_mouse.h
  /usr/include/SDL2/SDL_mutex.h
  /usr/include/SDL2/SDL_pixels.h

@@ -407,6 +407,7 @@ CMakeFiles/TetrisEngine.dir/src/Game.cpp.o: /home/baba/Projects/goofy/src/Game.c
   /usr/include/SDL2/SDL_messagebox.h \
   /usr/include/SDL2/SDL_metal.h \
   /usr/include/SDL2/SDL_misc.h \
+  /usr/include/SDL2/SDL_mixer.h \
   /usr/include/SDL2/SDL_mouse.h \
   /usr/include/SDL2/SDL_mutex.h \
   /usr/include/SDL2/SDL_pixels.h \
@@ -1095,6 +1096,7 @@ CMakeFiles/TetrisEngine.dir/src/main.cpp.o: /home/baba/Projects/goofy/src/main.c
   /usr/include/SDL2/SDL_messagebox.h \
   /usr/include/SDL2/SDL_metal.h \
   /usr/include/SDL2/SDL_misc.h \
+  /usr/include/SDL2/SDL_mixer.h \
   /usr/include/SDL2/SDL_mouse.h \
   /usr/include/SDL2/SDL_mutex.h \
   /usr/include/SDL2/SDL_pixels.h \
@@ -1479,6 +1481,8 @@ CMakeFiles/TetrisEngine.dir/src/main.cpp.o: /home/baba/Projects/goofy/src/main.c
 /usr/include/c++/13/random:
 
 /usr/include/c++/13/bits/random.tcc:
+
+/usr/include/SDL2/SDL_mixer.h:
 
 /home/baba/Projects/goofy/include/Game.h:
 

@@ -5,11 +5,12 @@
 #include "Tetromino.h"
 #include <random>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h> // Include SDL_mixer
 
 class Game {
 public:
     Game();
-    ~Game(); // Destructor to clean up font
+    ~Game(); // Destructor to clean up font and mixer
 
     void handleInput(SDL_Event& event);
     void update();
@@ -36,6 +37,10 @@ private:
 
     std::mt19937 rng; // Random number generator
     TTF_Font* font; // Font for rendering text
+    Mix_Music* backgroundMusic; // Background music
+    Mix_Chunk* moveSound;       // Sound for movement
+    Mix_Chunk* scoreSound;      // Sound for scoring points
+    Mix_Chunk* gameOverSound;   // Sound for game over
 
     void spawnTetromino();
     bool moveTetromino(int dx, int dy);
